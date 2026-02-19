@@ -2,25 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Java Swing Game</title>
-    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+    <title>Rock Paper Scissors - Java Web</title>
 </head>
-<body>
-    <div id="container" style="width: 100%; height: 100vh;"></div>
-    
+<body style="margin:0; overflow:hidden; background-color: #000;">
+    <div id="container" style="width: 100vw; height: 100vh;"></div>
+
+    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
     <script>
-        async function loadGame() {
-            // CheerpJ শুরু করা
-            await cheerpjInit();
-            
-            // গেমের ডিসপ্লে এরিয়া তৈরি করা
-            const container = document.getElementById("container");
-            cheerpjCreateDisplay(800, 600, container); 
-            
-            // JAR ফাইলটি রান করা (ফাইলের নাম আপনার JAR ফাইলের সাথে মিল রাখুন)
-            cheerpjRunJar("/game.jar");
-        }
-        loadGame();
+        window.onload = async function() {
+            if (typeof cheerpjInit !== 'undefined') {
+                await cheerpjInit();
+                const container = document.getElementById("container");
+                cheerpjCreateDisplay(800, 600, container); 
+                cheerpjRunJar("/RockPaperScissors.jar");
+            } else {
+                console.error("CheerpJ loader failed to load. Please check your internet connection.");
+                alert("Loading failed. Please refresh the page.");
+            }
+        };
     </script>
 </body>
 </html>
