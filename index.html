@@ -3,44 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Rock Paper Scissors - Java Web</title>
-    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js">await cheerpjRunJar("RockPaperScissors.jar");</script>
+    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
 </head>
 <body style="margin:0; background-color: #000; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
     
-    <div id="status_msg" style="margin-bottom: 20px; font-size: 1.2rem;">Connecting to Java Engine...</div>
+    <div id="status_msg" style="margin-bottom: 20px; font-size: 1.2rem; text-align: center;">
+        Connecting to Java Engine...
+    </div>
+    
     <div id="container"></div>
 
     <script>
         async function startEngine() {
-            // ১. চেক করা লোডারটি তৈরি হয়েছে কি না
+            const msg = document.getElementById("status_msg");
+
+            // ১. লোডার চেক করা
             if (typeof cheerpjInit === 'undefined') {
-                console.log("CheerpJ not ready yet, retrying in 1s...");
-                setTimeout(startEngine, 1000); // ১ সেকেন্ড পর আবার চেষ্টা করবে
+                msg.innerHTML = "Still connecting to engine... <br><small>Please check your internet or disable AdBlocker.</small>";
+                setTimeout(startEngine, 2000); 
                 return;
             }
 
             try {
-                document.getElementById("status_msg").innerHTML = "Initializing Java Runtime...";
+                msg.innerHTML = "Initializing Java Environment...";
                 await cheerpjInit();
                 
-                document.getElementById("status_msg").innerHTML = "Downloading Game Files (34MB)... Please wait 1-2 minutes.";
+                msg.innerHTML = "Downloading RockPaperScissors.jar (34MB)... <br>This may take a minute.";
                 
                 const container = document.getElementById("container");
                 cheerpjCreateDisplay(800, 600, container); 
                 
-                // ২. JAR ফাইলটি রান করা (ফাইলের নাম আপনার image_61393b.png অনুযায়ী সঠিক আছে)
-                await cheerpjRunJar("/RockPaperScissors.jar");
+                // ২. সরাসরি ফাইলের নাম ব্যবহার (যেহেতু ফাইল রুটে আছে)
+                await cheerpjRunJar("RockPaperScissors.jar");
                 
-                // গেম শুরু হলে মেসেজটি সরিয়ে ফেলা
-                document.getElementById("status_msg").style.display = "none";
+                // গেম শুরু হলে মেসেজ মুছে যাবে
+                msg.style.display = "none";
 
             } catch (err) {
-                console.error("Critical Error:", err);
-                document.getElementById("status_msg").innerHTML = "Error: " + err.message;
+                console.error("Error:", err);
+                msg.innerHTML = "Failed to load game. Error: " + err.message;
             }
         }
 
-        // পেজ লোড হলে ইঞ্জিন শুরু করা
         window.onload = startEngine;
     </script>
 </body>
