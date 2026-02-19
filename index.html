@@ -5,22 +5,27 @@
     <title>Rock Paper Scissors - Java Web</title>
     <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
 </head>
-<body style="margin:0; background-color: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; color: white;">
+<body style="margin:0; background-color: #000; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
     
+    <div id="status_msg">Downloading Game Assets (34MB)... Please wait.</div>
     <div id="container"></div>
 
     <script>
         window.onload = async function() {
-            // runtime শুরু করা
+            // Runtime শুরু
             await cheerpjInit();
             
-            // ডিসপ্লে সাইজ (আপনার গেমের উইন্ডো অনুযায়ী পরিবর্তন করতে পারেন)
+            // Runtime রেডি হলে মেসেজ পরিবর্তন
+            document.getElementById("status_msg").innerHTML = "Starting Game Engine...";
+            
             const container = document.getElementById("container");
             cheerpjCreateDisplay(800, 600, container); 
             
-            // ফাইল রান করা - খেয়াল করুন এখানে ফাইলের নামের আগে './' ব্যবহার করা হয়েছে
-            // এটি নিশ্চিত করে যে ফাইলটি একই ফোল্ডার থেকে নেওয়া হচ্ছে
-            cheerpjRunJar("./RockPaperScissors.jar");
+            // সরাসরি ফাইলের নাম ব্যবহার করুন (যেহেতু ফাইলটি রুটে আছে)
+            // সফলভাবে লোড হলে মেসেজটি সরিয়ে ফেলবে
+            cheerpjRunJar("RockPaperScissors.jar").then(() => {
+                document.getElementById("status_msg").style.display = "none";
+            });
         }
     </script>
 </body>
