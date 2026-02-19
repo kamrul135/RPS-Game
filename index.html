@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Java Swing Game</title>
+    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+</head>
+<body>
+    <div id="container" style="width: 100%; height: 100vh;"></div>
+    
+    <script>
+        async function loadGame() {
+            // CheerpJ শুরু করা
+            await cheerpjInit();
+            
+            // গেমের ডিসপ্লে এরিয়া তৈরি করা
+            const container = document.getElementById("container");
+            cheerpjCreateDisplay(800, 600, container); 
+            
+            // JAR ফাইলটি রান করা (ফাইলের নাম আপনার JAR ফাইলের সাথে মিল রাখুন)
+            cheerpjRunJar("/game.jar");
+        }
+        loadGame();
+    </script>
+</body>
+</html>
