@@ -5,27 +5,35 @@
     <title>Rock Paper Scissors - Java Web</title>
     <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
 </head>
-<body style="margin:0; background-color: #000; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+<body style="margin:0; background-color: #000; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
     
-    <div id="status_msg">Downloading Game Assets (34MB)... Please wait.</div>
+    <div id="status_msg" style="margin-bottom: 20px;">Initializing Java Runtime...</div>
     <div id="container"></div>
 
     <script>
         window.onload = async function() {
-            // Runtime শুরু
-            await cheerpjInit();
-            
-            // Runtime রেডি হলে মেসেজ পরিবর্তন
-            document.getElementById("status_msg").innerHTML = "Starting Game Engine...";
-            
-            const container = document.getElementById("container");
-            cheerpjCreateDisplay(800, 600, container); 
-            
-            // সরাসরি ফাইলের নাম ব্যবহার করুন (যেহেতু ফাইলটি রুটে আছে)
-            // সফলভাবে লোড হলে মেসেজটি সরিয়ে ফেলবে
-            cheerpjRunJar("RockPaperScissors.jar").then(() => {
-                document.getElementById("status_msg").style.display = "none";
-            });
+            try {
+                // ১. CheerpJ শুরু করা
+                await cheerpjInit();
+                document.getElementById("status_msg").innerHTML = "Loading RockPaperScissors.jar (34MB)... Please wait.";
+                
+                const container = document.getElementById("container");
+                // আপনার ডিসপ্লে সাইজ সেট করা
+                cheerpjCreateDisplay(800, 600, container); 
+                
+                // ২. JAR ফাইলটি রান করা
+                // নিশ্চিত করুন আপনার GitHub-এ ফাইলের নাম হুবহু "RockPaperScissors.jar"
+                await cheerpjRunJar("/RockPaperScissors.jar");
+                
+                // গেম শুরু হলে মেসেজটি হাইড করা
+                setTimeout(() => {
+                    document.getElementById("status_msg").style.display = "none";
+                }, 5000);
+
+            } catch (err) {
+                console.error("Error:", err);
+                document.getElementById("status_msg").innerHTML = "Error: Could not load the game. Check console (F12).";
+            }
         }
     </script>
 </body>
