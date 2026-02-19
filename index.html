@@ -2,24 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors - Java Web</title>
-</head>
-<body style="margin:0; overflow:hidden; background-color: #000;">
-    <div id="container" style="width: 100vw; height: 100vh;"></div>
-
     <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+</head>
+<body style="margin:0; background-color: #000; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div id="container"></div>
+
     <script>
-        window.onload = async function() {
-            if (typeof cheerpjInit !== 'undefined') {
-                await cheerpjInit();
-                const container = document.getElementById("container");
-                cheerpjCreateDisplay(800, 600, container); 
-                cheerpjRunJar("/RockPaperScissors.jar");
-            } else {
-                console.error("CheerpJ loader failed to load. Please check your internet connection.");
-                alert("Loading failed. Please refresh the page.");
+        window.addEventListener('load', async function() {
+            try {
+                if (typeof cheerpjInit !== 'undefined') {
+                    console.log("CheerpJ Loader detected, initializing...");
+                    await cheerpjInit();
+                    const container = document.getElementById("container");
+                    cheerpjCreateDisplay(800, 600, container); 
+                    cheerpjRunJar("/RockPaperScissors.jar");
+                } else {
+                    throw new Error("CheerpJ is undefined");
+                }
+            } catch (err) {
+                console.error("Error details:", err);
+                document.body.innerHTML = "<h2 style='color:white; text-align:center;'>Loading failed. Please check your internet or disable AdBlocker and refresh.</h2>";
             }
-        };
+        });
     </script>
 </body>
 </html>
