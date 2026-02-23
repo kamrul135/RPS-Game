@@ -1,0 +1,15 @@
+# Ignore build artifacts
+build/
+
+# Ignore IDE files
+.vscode/
+
+# Ignore runtime data
+data/
+
+# Class files
+*.class
+
+# OS generated files
+Thumbs.db
+.DS_Store
